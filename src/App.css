@@ -1,0 +1,313 @@
+#root {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.app-header h1 {
+  margin: 0;
+  color: #ffb800;
+}
+
+.app-header p {
+  color: #9a9a9a;
+  margin: 0.5rem 0 0;
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.item-search {
+  position: relative;
+}
+
+.item-search input {
+  width: 100%;
+  padding: 0.7em 1em;
+  font-size: 1rem;
+}
+
+.search-error {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+}
+
+.retry-button {
+  align-self: flex-start;
+}
+
+.search-results {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+.search-result {
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.search-result:last-child {
+  border-bottom: none;
+}
+
+.search-result-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.search-result-name {
+  flex: 1;
+}
+
+.search-result-price {
+  color: #9a9a9a;
+  font-size: 0.85rem;
+}
+
+.search-result-row button {
+  padding: 0.3em 0.9em;
+  font-size: 0.85rem;
+}
+
+.shopping-list {
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  background: #1a1a1a;
+  padding: 1rem;
+}
+
+.shopping-list-empty {
+  color: #9a9a9a;
+  text-align: center;
+  margin: 0;
+  padding: 1rem 0;
+}
+
+.shopping-list-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.shopping-list-item {
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.shopping-list-item:last-child {
+  border-bottom: none;
+}
+
+.shopping-list-item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+}
+
+.item-name {
+  flex: 1;
+}
+
+.item-price {
+  width: 9em;
+  text-align: right;
+  color: #ffb800;
+  font-weight: 500;
+}
+
+.item-remove {
+  background: transparent;
+  border: 1px solid #333333;
+  padding: 0.3em 0.6em;
+  color: #ff6b6b;
+}
+
+.item-remove:hover {
+  border-color: #ff6b6b;
+  background-color: #262626;
+}
+
+.shopping-list-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid #2a2a2a;
+  color: #ffb800;
+}
+
+.history-button {
+  background: transparent;
+  border: 1px solid #333333;
+  padding: 0.3em 0.8em;
+  font-size: 0.85rem;
+  color: #9a9a9a;
+  white-space: nowrap;
+}
+
+.history-button:hover {
+  border-color: #ffb800;
+  color: #e8e6e3;
+}
+
+.history-button.active {
+  border-color: #ffb800;
+  color: #ffb800;
+  background: #262626;
+}
+
+.history-panel {
+  padding: 0.9rem 0.75rem 1.1rem;
+  margin: 0 0.75rem 0.75rem;
+  background: #141414;
+  border: 1px solid #262626;
+  border-radius: 8px;
+}
+
+.shopping-list-item .history-panel {
+  margin: 0 0 0.75rem;
+}
+
+.lookback-select {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.lookback-option {
+  padding: 0.3em 0.8em;
+  font-size: 0.85rem;
+  background: transparent;
+  border: 1px solid #333333;
+  color: #9a9a9a;
+}
+
+.lookback-option.active {
+  border-color: #ffb800;
+  color: #ffb800;
+  background: #262626;
+}
+
+.chart-status {
+  color: #9a9a9a;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.chart-status-error {
+  color: #ff6b6b;
+}
+
+.chart-empty {
+  color: #9a9a9a;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.price-chart-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  color: #9a9a9a;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.chart-tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.8rem;
+  color: #c3c2b7;
+  background: #121212;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+  width: fit-content;
+}
+
+.chart-tooltip strong {
+  color: #e8e6e3;
+  font-size: 0.8rem;
+}
+
+.table-toggle {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  padding: 0.35em 0.9em;
+}
+
+.chart-table-wrapper {
+  margin-top: 0.75rem;
+  max-height: 260px;
+  overflow-y: auto;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+}
+
+.chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-table th,
+.chart-table td {
+  padding: 0.4rem 0.6rem;
+  text-align: right;
+  border-bottom: 1px solid #2a2a2a;
+  white-space: nowrap;
+}
+
+.chart-table th:first-child,
+.chart-table td:first-child {
+  text-align: left;
+}
+
+.chart-table th {
+  color: #898781;
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  background: #1a1a1a;
+}
