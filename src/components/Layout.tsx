@@ -4,8 +4,8 @@ function Layout() {
   return (
     <>
       <header className="app-header">
-        <h1>OSRS Shopping List</h1>
-        <p>Track what you need to buy for your next grind</p>
+        <h1>OSRS Utilities</h1>
+        <p>Tools for Old School RuneScape</p>
         <nav className="app-nav">
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'app-nav-link active' : 'app-nav-link')}>
             Shopping List
