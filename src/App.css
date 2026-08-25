@@ -46,6 +46,14 @@
   background: #1e1e1e;
 }
 
+.page-placeholder {
+  border: 1px dashed #2a2a2a;
+  border-radius: 8px;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #9a9a9a;
+}
+
 .app-main {
   display: flex;
   flex-direction: column;

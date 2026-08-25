@@ -10,6 +10,9 @@ function Layout() {
           <NavLink to="/" end className={({ isActive }) => (isActive ? 'app-nav-link active' : 'app-nav-link')}>
             Shopping List
           </NavLink>
+          <NavLink to="/unity-bingo" className={({ isActive }) => (isActive ? 'app-nav-link active' : 'app-nav-link')}>
+            Unity Bingo
+          </NavLink>
         </nav>
       </header>
       <main className="app-main">
