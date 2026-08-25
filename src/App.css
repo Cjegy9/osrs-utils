@@ -114,6 +114,71 @@
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
 }
 
+.bingo-badge {
+  color: #e8e6e3;
+  background: rgba(0, 0, 0, 0.65);
+  font-size: clamp(0.55rem, 2.1vw, 0.75rem);
+  font-weight: 600;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.bingo-badge-corner {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+
+.bingo-tile-dual {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.bingo-tile-dual.completed {
+  border-color: rgba(60, 220, 110, 0.8);
+}
+
+.bingo-subtracker {
+  flex: 1;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s;
+}
+
+.bingo-subtracker:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 184, 0, 0.25);
+}
+
+.bingo-subtracker:hover {
+  background: rgba(255, 184, 0, 0.12);
+}
+
+.bingo-subtracker:focus-visible {
+  outline: 2px solid #ffb800;
+  outline-offset: -2px;
+}
+
+.bingo-subtracker.done {
+  background: rgba(20, 160, 60, 0.35);
+}
+
+.bingo-subtracker .bingo-check {
+  font-size: clamp(0.8rem, 3.5vw, 1.4rem);
+}
+
 .app-main {
   display: flex;
   flex-direction: column;
