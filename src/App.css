@@ -21,6 +21,31 @@
   margin: 0.5rem 0 0;
 }
 
+.app-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.app-nav-link {
+  padding: 0.4em 1em;
+  border-radius: 6px;
+  color: #9a9a9a;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.app-nav-link:hover {
+  color: #e8e6e3;
+  background: #1e1e1e;
+}
+
+.app-nav-link.active {
+  color: #ffb800;
+  background: #1e1e1e;
+}
+
 .app-main {
   display: flex;
   flex-direction: column;
