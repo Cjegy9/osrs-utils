@@ -46,12 +46,72 @@
   background: #1e1e1e;
 }
 
-.page-placeholder {
-  border: 1px dashed #2a2a2a;
+.unity-bingo-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.unity-bingo-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #e8e6e3;
+  font-weight: 500;
+}
+
+.unity-bingo-board {
+  position: relative;
+  width: 100%;
+}
+
+.unity-bingo-image {
+  display: block;
+  width: 100%;
+  height: auto;
   border-radius: 8px;
-  padding: 3rem 1rem;
-  text-align: center;
-  color: #9a9a9a;
+  border: 1px solid #2a2a2a;
+}
+
+.unity-bingo-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.bingo-tile {
+  position: absolute;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.bingo-tile:hover {
+  background: rgba(255, 184, 0, 0.12);
+  border-color: rgba(255, 184, 0, 0.5);
+}
+
+.bingo-tile:focus-visible {
+  outline: 2px solid #ffb800;
+  outline-offset: 2px;
+}
+
+.bingo-tile.completed {
+  background: rgba(20, 160, 60, 0.35);
+  border-color: rgba(60, 220, 110, 0.8);
+}
+
+.bingo-check {
+  color: #baffcf;
+  font-size: clamp(1rem, 5vw, 2.25rem);
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
 }
 
 .app-main {
