@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { usePersistedState } from '../hooks/usePersistedState'
+import { useFirebaseProgress } from '../hooks/useFirebaseProgress'
 
 interface Tracker {
   key: string
@@ -62,7 +62,7 @@ function progressKey(tileIndex: number, trackerKey: string) {
 }
 
 function UnityBingoPage() {
-  const [progress, setProgress] = usePersistedState<Record<string, number>>('unity-bingo-progress-v2', {})
+  const { progress, loading, error, setEntry, clearAll } = useFirebaseProgress('unityBingoProgress')
 
   const cells = useMemo(() => {
     const toPct = (px: number) => (px / IMAGE_SIZE) * 100
@@ -88,16 +88,22 @@ function UnityBingoPage() {
 
   function bumpTracker(tileIndex: number, tracker: Tracker) {
     const key = progressKey(tileIndex, tracker.key)
-    setProgress((prev) => {
-      const current = prev[key] ?? 0
-      const next = current >= tracker.target ? 0 : current + 1
-      return { ...prev, [key]: next }
-    })
+    const current = progress[key] ?? 0
+    const next = current >= tracker.target ? 0 : current + 1
+    setEntry(key, next)
   }
 
   function resetBoard() {
-    if (completedCount > 0 && !window.confirm('Clear all progress on this board?')) return
-    setProgress({})
+    if (completedCount > 0 && !window.confirm('Clear all progress on this board for everyone?')) return
+    clearAll()
+  }
+
+  if (loading) {
+    return (
+      <div className="unity-bingo-page">
+        <p className="chart-status">Connecting to shared board…</p>
+      </div>
+    )
   }
 
   return (
@@ -106,10 +112,12 @@ function UnityBingoPage() {
         <span>
           {completedCount} / {TILE_DEFS.length} complete
         </span>
+        <span className="unity-bingo-shared-label">Shared live with everyone</span>
         <button type="button" className="history-button" onClick={resetBoard}>
           Reset board
         </button>
       </div>
+      {error && <p className="chart-status chart-status-error">Sync issue: {error}</p>}
       <div className="unity-bingo-board">
         <img
           src={`${import.meta.env.BASE_URL}unity-bingo.png`}

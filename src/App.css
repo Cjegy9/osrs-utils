@@ -61,6 +61,13 @@
   font-weight: 500;
 }
 
+.unity-bingo-shared-label {
+  color: #9a9a9a;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-right: auto;
+}
+
 .unity-bingo-board {
   position: relative;
   width: 100%;
