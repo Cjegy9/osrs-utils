@@ -134,21 +134,26 @@ function UnityBingoPage() {
             }
 
             if (cell.trackers.length > 1) {
-              const done = cell.trackers.some((t) => (progress[progressKey(cell.index, t.key)] ?? 0) === t.target)
+              const counts = cell.trackers.map((t) => progress[progressKey(cell.index, t.key)] ?? 0)
+              const done = cell.trackers.some((t, i) => counts[i] === t.target)
+              const partial = !done && counts.some((c) => c > 0)
+              const dualClassName = ['bingo-tile', 'bingo-tile-dual', done && 'completed', partial && 'partial']
+                .filter(Boolean)
+                .join(' ')
               return (
-                <div
-                  key={cell.index}
-                  className={done ? 'bingo-tile bingo-tile-dual completed' : 'bingo-tile bingo-tile-dual'}
-                  style={cellStyle}
-                >
-                  {cell.trackers.map((t) => {
-                    const count = progress[progressKey(cell.index, t.key)] ?? 0
+                <div key={cell.index} className={dualClassName} style={cellStyle}>
+                  {cell.trackers.map((t, i) => {
+                    const count = counts[i]
                     const trackerDone = count === t.target
+                    const trackerPartial = !trackerDone && count > 0
+                    const subClassName = ['bingo-subtracker', trackerDone && 'done', trackerPartial && 'partial']
+                      .filter(Boolean)
+                      .join(' ')
                     return (
                       <button
                         key={t.key}
                         type="button"
-                        className={trackerDone ? 'bingo-subtracker done' : 'bingo-subtracker'}
+                        className={subClassName}
                         onClick={() => bumpTracker(cell.index, t)}
                         aria-pressed={trackerDone}
                         aria-label={`${cell.label}: ${t.label} ${count}/${t.target}${trackerDone ? ', complete' : ''}`}
@@ -170,11 +175,13 @@ function UnityBingoPage() {
             const tracker = cell.trackers[0]
             const count = progress[progressKey(cell.index, tracker.key)] ?? 0
             const done = count === tracker.target
+            const partial = !done && count > 0
+            const className = ['bingo-tile', done && 'completed', partial && 'partial'].filter(Boolean).join(' ')
             return (
               <button
                 key={cell.index}
                 type="button"
-                className={done ? 'bingo-tile completed' : 'bingo-tile'}
+                className={className}
                 style={cellStyle}
                 onClick={() => bumpTracker(cell.index, tracker)}
                 aria-pressed={done}

@@ -114,6 +114,15 @@
   border-color: rgba(60, 220, 110, 0.8);
 }
 
+.bingo-tile.partial {
+  background: rgba(255, 184, 0, 0.18);
+  border-color: rgba(255, 184, 0, 0.6);
+}
+
+.bingo-tile.partial:hover {
+  background: rgba(255, 184, 0, 0.26);
+}
+
 .bingo-check {
   color: #baffcf;
   font-size: clamp(1rem, 5vw, 2.25rem);
@@ -151,6 +160,10 @@
   border-color: rgba(60, 220, 110, 0.8);
 }
 
+.bingo-tile-dual.partial {
+  border-color: rgba(255, 184, 0, 0.6);
+}
+
 .bingo-subtracker {
   flex: 1;
   width: 100%;
@@ -180,6 +193,14 @@
 
 .bingo-subtracker.done {
   background: rgba(20, 160, 60, 0.35);
+}
+
+.bingo-subtracker.partial {
+  background: rgba(255, 184, 0, 0.18);
+}
+
+.bingo-subtracker.partial:hover {
+  background: rgba(255, 184, 0, 0.26);
 }
 
 .bingo-subtracker .bingo-check {
