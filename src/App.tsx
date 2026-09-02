@@ -1,7 +1,7 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Layout from './components/Layout'
-import ShoppingListPage from './pages/ShoppingListPage'
+import PriceTrackerPage from './pages/PriceTrackerPage'
 import UnityBingoPage from './pages/UnityBingoPage'
 
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '')
@@ -11,7 +11,8 @@ function App() {
     <BrowserRouter basename={basename}>
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<ShoppingListPage />} />
+          <Route index element={<Navigate to="price-tracker" replace />} />
+          <Route path="price-tracker" element={<PriceTrackerPage />} />
           <Route path="unity-bingo" element={<UnityBingoPage />} />
         </Route>
       </Routes>

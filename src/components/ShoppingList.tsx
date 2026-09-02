@@ -25,7 +25,7 @@ function ShoppingList({ entries, onRemove }: ShoppingListProps) {
   if (entries.length === 0) {
     return (
       <section className="shopping-list">
-        <p className="shopping-list-empty">Your shopping list is empty. Search for an item above to add it.</p>
+        <p className="shopping-list-empty">Your price tracker is empty. Search for an item above to add it.</p>
       </section>
     )
   }

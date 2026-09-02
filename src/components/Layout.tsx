@@ -7,8 +7,8 @@ function Layout() {
         <h1>OSRS Utilities</h1>
         <p>Tools for Old School RuneScape</p>
         <nav className="app-nav">
-          <NavLink to="/" end className={({ isActive }) => (isActive ? 'app-nav-link active' : 'app-nav-link')}>
-            Shopping List
+          <NavLink to="/price-tracker" className={({ isActive }) => (isActive ? 'app-nav-link active' : 'app-nav-link')}>
+            Price Tracker
           </NavLink>
           <NavLink to="/unity-bingo" className={({ isActive }) => (isActive ? 'app-nav-link active' : 'app-nav-link')}>
             Unity Bingo

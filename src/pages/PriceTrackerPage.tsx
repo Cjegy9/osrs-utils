@@ -4,7 +4,7 @@ import { useOsrsItems } from '../hooks/useOsrsItems'
 import { usePersistedState } from '../hooks/usePersistedState'
 import type { OsrsItem, ShoppingListEntry } from '../types'
 
-function ShoppingListPage() {
+function PriceTrackerPage() {
   const { items, loading, error, refresh } = useOsrsItems()
   const [entries, setEntries] = usePersistedState<ShoppingListEntry[]>('osrs-shopping-list-v1', [])
 
@@ -32,4 +32,4 @@ function ShoppingListPage() {
   )
 }
 
-export default ShoppingListPage
+export default PriceTrackerPage
