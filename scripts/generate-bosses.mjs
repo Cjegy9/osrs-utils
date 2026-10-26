@@ -196,6 +196,43 @@ async function fetchWikitext(titles) {
   return result
 }
 
+// Resolves each item's inventory icon on the wiki. Most are "<name>.png", but some file
+// pages are redirects (e.g. "Ruby bolts (e).png" -> "Ruby bolts (e) 5.png"), and the plain
+// URL 404s for those. Returns:
+//   iconFiles: name -> real filename, only where it differs from "<name>.png"
+//   noIcon:    names with no icon at all (generic labels like "God capes")
+async function resolveIcons(names) {
+  const iconFiles = {}
+  const noIcon = []
+  for (let i = 0; i < names.length; i += 50) {
+    const chunk = names.slice(i, i + 50)
+    const json = await api({
+      action: 'query',
+      prop: 'imageinfo',
+      redirects: '1',
+      titles: chunk.map((n) => `File:${n}.png`).join('|'),
+    })
+    const normalized = new Map((json.query.normalized ?? []).map((r) => [r.from, r.to]))
+    const redirects = new Map((json.query.redirects ?? []).map((r) => [r.from, r.to]))
+    const pages = new Map(json.query.pages.map((p) => [p.title, p]))
+    for (const name of chunk) {
+      let title = `File:${name}.png`
+      title = normalized.get(title) ?? title
+      title = redirects.get(title) ?? title
+      const page = pages.get(title)
+      if (!page?.imageinfo?.length) {
+        noIcon.push(name)
+        continue
+      }
+      const file = title.replace(/^File:/, '')
+      // Exact comparison: the API capitalises the first letter, and image URLs are
+      // case-sensitive, so "amethyst dart" needs an override to "Amethyst dart.png".
+      if (file !== `${name}.png`) iconFiles[name] = file
+    }
+  }
+  return { iconFiles, noIcon: noIcon.sort((a, b) => a.localeCompare(b)) }
+}
+
 async function main() {
   const members = await listAll(
     { action: 'query', list: 'categorymembers', cmtitle: 'Category:Bosses', cmlimit: '500', cmnamespace: '0' },
@@ -250,12 +287,28 @@ async function main() {
   }
 
   bosses.sort((a, b) => a.name.localeCompare(b.name))
+
+  const itemNames = new Set()
+  for (const boss of bosses)
+    for (const setup of boss.setups)
+      for (const slot of setup.slots) for (const option of slot.options) option.items.forEach((n) => itemNames.add(n))
+  const { iconFiles, noIcon } = await resolveIcons([...itemNames])
+
   await mkdir(dirname(OUT), { recursive: true })
   await writeFile(
     OUT,
-    JSON.stringify({ generatedAt: new Date().toISOString(), source: 'https://oldschool.runescape.wiki', bosses }) + '\n',
+    JSON.stringify({
+      generatedAt: new Date().toISOString(),
+      source: 'https://oldschool.runescape.wiki',
+      iconFiles,
+      noIcon,
+      bosses,
+    }) + '\n',
   )
-  console.log(`wrote ${bosses.length} bosses to ${OUT}`)
+  console.log(
+    `wrote ${bosses.length} bosses (${itemNames.size} items, ${Object.keys(iconFiles).length} icon redirects, ` +
+      `${noIcon.length} without an icon) to ${OUT}`,
+  )
 }
 
 main().catch((err) => {

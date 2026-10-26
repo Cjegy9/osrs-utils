@@ -40,5 +40,10 @@ export interface Boss {
 export interface BossData {
   generatedAt: string
   source: string
+  // Item name -> wiki icon filename, only where it isn't simply "<name>.png" (stackable
+  // items such as bolts use a "... 5.png" file).
+  iconFiles: Record<string, string>
+  // Item names with no inventory icon on the wiki (generic labels like "God capes").
+  noIcon: string[]
   bosses: Boss[]
 }

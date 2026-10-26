@@ -115,9 +115,136 @@
   color: #c3c2b7;
 }
 
+.boss-chip {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
 .boss-chip:hover {
   background: #262626;
   border-color: transparent;
+}
+
+.boss-chip-score {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: #898781;
+  font-variant-numeric: tabular-nums;
+}
+
+.boss-chip.active .boss-chip-score {
+  color: #ffb800;
+}
+
+.boss-chip.owned {
+  color: #6fe39a;
+}
+
+.boss-chip.owned .boss-chip-score {
+  color: #6fe39a;
+}
+
+.sidebar-tabs {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.sidebar-tab {
+  flex: 1;
+  padding: 0.35em 0.5em;
+  font-size: 0.85rem;
+  background: transparent;
+  border: 1px solid #333333;
+  color: #9a9a9a;
+}
+
+.sidebar-tab.active {
+  border-color: #ffb800;
+  color: #ffb800;
+  background: #262626;
+}
+
+.sidebar-hint {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #898781;
+}
+
+.gear-clear {
+  margin-top: 0.4rem;
+  width: 100%;
+  padding: 0.3em 0.7em;
+  font-size: 0.8rem;
+  background: transparent;
+  color: #ff6b6b;
+  border: 1px solid #333333;
+}
+
+.gear-clear:hover {
+  border-color: #ff6b6b;
+}
+
+.boss-readiness {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  color: #9a9a9a;
+}
+
+.boss-readiness strong {
+  color: #6fe39a;
+}
+
+.boss-style-score {
+  margin-left: 0.45em;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* Items read as inline text but are clickable to mark them as owned. */
+.gear-item {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.gear-item:hover {
+  background: none;
+  text-decoration: underline dotted;
+}
+
+.gear-item.owned {
+  color: #6fe39a;
+  font-weight: 600;
+}
+
+/* Wiki icons vary in size, so fit them in a square box instead of stretching them. */
+.gear-icon {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  vertical-align: middle;
+  margin: -4px 0.3rem -4px 0;
+  object-fit: contain;
+}
+
+.gear-joiner {
+  color: #898781;
+}
+
+.gear-option.best {
+  border-left: 2px solid #6fe39a;
+  padding-left: 0.4rem;
+  margin-left: -0.4rem;
 }
 
 .boss-chip.active {
