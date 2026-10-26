@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Layout from './components/Layout'
+import BossingSelectorPage from './pages/BossingSelectorPage'
 import PriceTrackerPage from './pages/PriceTrackerPage'
 import UnityBingoPage from './pages/UnityBingoPage'
 
@@ -14,6 +15,7 @@ function App() {
           <Route index element={<Navigate to="price-tracker" replace />} />
           <Route path="price-tracker" element={<PriceTrackerPage />} />
           <Route path="unity-bingo" element={<UnityBingoPage />} />
+          <Route path="bossing-selector" element={<BossingSelectorPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
