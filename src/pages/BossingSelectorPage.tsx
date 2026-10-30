@@ -2,6 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import { usePersistedState } from '../hooks/usePersistedState'
 import type { Boss, BossData } from '../types'
 import { bestOwnedIndex, formatPercent, scoreBoss, scoreSetup } from '../utils/gearScore'
+import { parseGearImport, serializeGear } from '../utils/gearTransfer'
 
 const SLOT_LABELS: Record<string, string> = {
   head: 'Head',
@@ -32,6 +33,10 @@ function BossingSelectorPage() {
   const [loadError, setLoadError] = useState(false)
   const [query, setQuery] = useState('')
   const [gearQuery, setGearQuery] = useState('')
+  const [transferMessage, setTransferMessage] = useState<{ text: string; error: boolean } | null>(null)
+  // Fallback for browsers that won't let a page read the clipboard: paste into a box instead.
+  const [pasteOpen, setPasteOpen] = useState(false)
+  const [pasteText, setPasteText] = useState('')
   const [tab, setTab] = useState<SidebarTab>('bosses')
   const [selectedName, setSelectedName] = useState<string | null>(null)
   const [styleIndex, setStyleIndex] = useState(0)
@@ -107,6 +112,51 @@ function BossingSelectorPage() {
     setOwnedList([])
   }
 
+  async function exportGear() {
+    try {
+      await navigator.clipboard.writeText(serializeGear(ownedList))
+      setTransferMessage({
+        text: `Copied ${ownedList.length} item${ownedList.length === 1 ? '' : 's'} to the clipboard.`,
+        error: false,
+      })
+    } catch {
+      setTransferMessage({ text: "Couldn't copy to the clipboard. Check the browser's clipboard permission.", error: true })
+    }
+  }
+
+  // Merges rather than replaces, so importing never throws away gear you already marked.
+  function applyImport(text: string) {
+    try {
+      const { items, skipped } = parseGearImport(text, new Set(allItems))
+      const added = items.filter((name) => !owned.has(name)).length
+      setOwnedList((prev) => [...new Set([...prev, ...items])])
+      const parts = [`Imported ${items.length} item${items.length === 1 ? '' : 's'} (${added} new).`]
+      if (skipped.length) parts.push(`${skipped.length} skipped: not in the boss data.`)
+      setTransferMessage({ text: parts.join(' '), error: false })
+      setPasteOpen(false)
+      setPasteText('')
+    } catch (err) {
+      setTransferMessage({ text: err instanceof Error ? err.message : 'Import failed.', error: true })
+    }
+  }
+
+  async function importFromClipboard() {
+    let text: string
+    try {
+      text = await navigator.clipboard.readText()
+    } catch {
+      // Denied, or this browser doesn't let pages read the clipboard.
+      setPasteOpen(true)
+      setTransferMessage({ text: "Couldn't read the clipboard. Paste your list into the box instead.", error: true })
+      return
+    }
+    if (!text.trim()) {
+      setTransferMessage({ text: 'The clipboard is empty. Copy a gear list with Export first.', error: true })
+      return
+    }
+    applyImport(text)
+  }
+
   if (loadError) {
     return <p className="chart-status chart-status-error">Couldn't load the boss list.</p>
   }
@@ -122,7 +172,11 @@ function BossingSelectorPage() {
             type="button"
             className={tab === 'bosses' ? 'sidebar-tab active' : 'sidebar-tab'}
             aria-pressed={tab === 'bosses'}
-            onClick={() => setTab('bosses')}
+            onClick={() => {
+              setTab('bosses')
+              setTransferMessage(null)
+              setPasteOpen(false)
+            }}
           >
             Bosses
           </button>
@@ -179,6 +233,51 @@ function BossingSelectorPage() {
               onChange={(e) => setGearQuery(e.target.value)}
               aria-label="Search gear to add"
             />
+            <div className="gear-transfer">
+              <button type="button" className="gear-transfer-button" onClick={exportGear} disabled={owned.size === 0}>
+                Export
+              </button>
+              <button type="button" className="gear-transfer-button" onClick={importFromClipboard}>
+                Import
+              </button>
+            </div>
+            {transferMessage && (
+              <p className={transferMessage.error ? 'gear-transfer-message error' : 'gear-transfer-message'} role="status">
+                {transferMessage.text}
+              </p>
+            )}
+            {pasteOpen && (
+              <div className="gear-paste">
+                <textarea
+                  className="gear-paste-box"
+                  placeholder="Paste a gear list here"
+                  value={pasteText}
+                  onChange={(e) => setPasteText(e.target.value)}
+                  aria-label="Paste a gear list to import"
+                  rows={4}
+                />
+                <div className="gear-transfer">
+                  <button
+                    type="button"
+                    className="gear-transfer-button"
+                    onClick={() => applyImport(pasteText)}
+                    disabled={!pasteText.trim()}
+                  >
+                    Import pasted list
+                  </button>
+                  <button
+                    type="button"
+                    className="gear-transfer-button"
+                    onClick={() => {
+                      setPasteOpen(false)
+                      setPasteText('')
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
             <ul className="boss-list">
               {gearQuery.trim() ? (
                 <>

@@ -173,6 +173,54 @@
   color: #898781;
 }
 
+.gear-transfer {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.gear-transfer-button {
+  flex: 1;
+  padding: 0.35em 0.5em;
+  font-size: 0.85rem;
+  background: transparent;
+  border: 1px solid #333333;
+  color: #c3c2b7;
+}
+
+.gear-transfer-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.gear-transfer-button:disabled:hover {
+  border-color: #333333;
+  background: transparent;
+}
+
+.gear-paste {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.gear-paste-box {
+  width: 100%;
+  resize: vertical;
+  font-size: 0.75rem;
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+.gear-transfer-message {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #6fe39a;
+}
+
+.gear-transfer-message.error {
+  color: #ff6b6b;
+}
+
 .gear-clear {
   margin-top: 0.4rem;
   width: 100%;
